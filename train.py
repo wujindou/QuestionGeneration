@@ -23,7 +23,7 @@ from transformers import AutoTokenizer
 tokenizer = AutoTokenizer.from_pretrained(checkpoint,use_fast=False)
 def preprocess_function(example):
   model_inputs = tokenizer(example['context'], truncation=True, padding="max_length", max_length=1024)
-  labels = tokenizer(text_target=example["entities"], max_length=128, truncation=True)
+  labels = tokenizer(text_target=example["question"], max_length=128, truncation=True)
   model_inputs['labels'] = labels['input_ids']
   return model_inputs
 
