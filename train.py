@@ -18,7 +18,7 @@ os.environ["WANDB_DISABLED"] = "true"
 checkpoint='fnlp/bart-base-chinese'
 
 from transformers import AutoTokenizer
-from modeling_cpt import CPTForConditionalGeneration
+# from modeling_cpt import CPTForConditionalGeneration
 
 tokenizer = AutoTokenizer.from_pretrained(checkpoint,use_fast=False)
 def preprocess_function(example):
@@ -60,9 +60,8 @@ def compute_metrics(eval_pred):
     return {k: round(v, 4) for k, v in result.items()}
 
 from transformers import AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
-from modeling_cpt import CPTForConditionalGeneration
-model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint) if 'cpt' not in checkpoint else CPTForConditionalGeneration.from_pretrained(checkpoint)
-
+# from modeling_cpt import CPTForConditionalGeneration
+model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint) 
 training_args = Seq2SeqTrainingArguments(
     output_dir="bart_seq2seq_task9",
     evaluation_strategy="steps",
