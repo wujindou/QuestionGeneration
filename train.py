@@ -29,8 +29,8 @@ def preprocess_function(example):
 
 
 import json 
-train_data =[json.loads(line.strip()) for line in open('train.json','r',encoding='utf-8').readlines()]
-dev_data = [json.loads(line.strip()) for line in open('dev.json','r',encoding='utf-8').readlines()]
+train_data =[json.loads(line.strip()) for line in open('train.json','r',encoding='utf-8').readlines()][:1000]
+dev_data = [json.loads(line.strip()) for line in open('dev.json','r',encoding='utf-8').readlines()][:100]
 
 import pandas as pd
 import datasets
@@ -79,7 +79,7 @@ def get_model():
 # model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint) 
 training_args = Seq2SeqTrainingArguments(
     output_dir="bart_seq2seq_task9",
-    evaluation_strategy="steps",
+    evaluation_strategy="epoch",
     learning_rate=5e-5,
     per_device_train_batch_size=8,
     gradient_accumulation_steps=4,
@@ -91,9 +91,9 @@ training_args = Seq2SeqTrainingArguments(
     fp16=True,
     report_to='tensorboard',
     load_best_model_at_end=True,
-    save_strategy='steps',
-    eval_steps=20,
-    save_steps=20,
+    save_strategy='epoch',
+    # eval_steps=20,
+    # save_steps=20,
     seed=42
 )
 
