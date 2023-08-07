@@ -29,9 +29,8 @@ def preprocess_function(example):
 
 
 import json 
-train_data =[json.loads(line.strip()) for line in open('train.json','r',encoding='utf-8').readlines()][:1000]
-dev_data = [json.loads(line.strip()) for line in open('dev.json','r',encoding='utf-8').readlines()][:100]
-
+train_data =[json.loads(line.strip()) for line in open('train.json','r',encoding='utf-8').readlines()]
+dev_data = [json.loads(line.strip()) for line in open('dev.json','r',encoding='utf-8').readlines()]
 import pandas as pd
 import datasets
 train_dataset =datasets.Dataset.from_pandas(pd.DataFrame(train_data))
