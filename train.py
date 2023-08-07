@@ -27,9 +27,7 @@ def preprocess_function(example):
   model_inputs['labels'] = labels['input_ids']
   return model_inputs
 
-ds={'train':train_dataset,'validation':dev_dataset}
-for split in ds:
-  ds[split] = ds[split].map(preprocess_function)
+
 import json 
 train_data =[json.loads(line.strip()) for line in open('train.json','r',encoding='utf-8').readlines()]
 dev_data = [json.loads(line.strip()) for line in open('dev.json','r',encoding='utf-8').readlines()]
@@ -39,6 +37,10 @@ import datasets
 train_dataset =datasets.Dataset.from_pandas(pd.DataFrame(train_data))
 dev_dataset = datasets.Dataset.from_pandas(pd.DataFrame(dev_data))
 
+
+ds={'train':train_dataset,'validation':dev_dataset}
+for split in ds:
+  ds[split] = ds[split].map(preprocess_function)
 
 
 from transformers import DataCollatorForSeq2Seq
