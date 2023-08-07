@@ -61,7 +61,15 @@ def compute_metrics(eval_pred):
 
 from transformers import AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
 # from modeling_cpt import CPTForConditionalGeneration
-model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint) 
+from transformers import AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
+
+def get_model():
+    # get_model is used for the model_init argument for trainer. This ensures reproducibility. Otherwise, weights from classification head are randomly initialized.
+    # see https://discuss.huggingface.co/t/fixing-the-random-seed-in-the-trainer-does-not-produce-the-same-results-across-runs/3442
+    model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint) 
+    return model
+
+# model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint) 
 training_args = Seq2SeqTrainingArguments(
     output_dir="bart_seq2seq_task9",
     evaluation_strategy="steps",
@@ -83,7 +91,7 @@ training_args = Seq2SeqTrainingArguments(
 )
 
 trainer = Seq2SeqTrainer(
-    model=model,
+    model=get_model(),
     args=training_args,
     train_dataset=ds["train"],
     eval_dataset=ds["validation"],
