@@ -34,6 +34,11 @@ import json
 train_data =[json.loads(line.strip()) for line in open('train.json','r',encoding='utf-8').readlines()]
 dev_data = [json.loads(line.strip()) for line in open('dev.json','r',encoding='utf-8').readlines()]
 
+import pandas as pd
+import datasets
+train_dataset =datasets.Dataset.from_pandas(pd.DataFrame(train_data))
+dev_dataset = datasets.Dataset.from_pandas(pd.DataFrame(dev_data))
+
 
 
 from transformers import DataCollatorForSeq2Seq
