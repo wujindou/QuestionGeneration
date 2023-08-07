@@ -3,3 +3,5 @@ pandas
 datasets
 sentencepiece
 accelerate
+rouge_score
+rouge
